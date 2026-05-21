@@ -1,0 +1,10 @@
+.vscode/
+results/
+
+*.asv
+*.mex*
+
+src/partialsort*
+tests/test_range*
+tests/test_synthetic3*
+tests/test_vector*
