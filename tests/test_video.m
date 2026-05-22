@@ -1,3 +1,6 @@
+% test AltMin with accelerated UpdateS on video data
+% experiment on a single video for an early check
+
 clear
 clc
 

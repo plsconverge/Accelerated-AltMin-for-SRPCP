@@ -1,3 +1,6 @@
+% video data test
+% compare algorithms on 8 selected datasets
+
 clear
 clc
 

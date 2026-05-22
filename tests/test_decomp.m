@@ -1,3 +1,6 @@
+% perform AltMin on video data
+% save the resulting matrices as images for visual check
+
 clear
 clc
 

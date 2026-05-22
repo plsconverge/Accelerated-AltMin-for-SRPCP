@@ -1,4 +1,6 @@
 function [L, status, k, nrm] = updateL(L, rho, mode, k0)
+    % control function for low-rank subproblem solver
+
     % status = 0 -- converge
     %          1 -- invalid mode
     %          2 -- subproblem fail
@@ -15,6 +17,7 @@ end
 
 
 function [L, status, k, nrm] = updateL_full(L, rho)
+    % outer processor
     [U, D, V] = svd(L, "econ");
     D_diag = diag(D);
 
@@ -26,6 +29,7 @@ function [L, status, k, nrm] = updateL_full(L, rho)
 end
 
 function [status, tk, k] = explicit_solver(arr, tau)
+    % inner solver for UpdateL -- full version
     a_nnz = nnz(arr);
     a_nrm2 = norm(arr, 2);
     a_max = arr(1);
@@ -82,6 +86,7 @@ function [status, tk, k] = explicit_solver(arr, tau)
 end
 
 function [L, status, k, nrm] = updateL_par(L, rho, k0)
+    % outer processor 
     [~, n] = size(L);
     mult = 2;
     nrm_fro = norm(L, "fro");
@@ -115,6 +120,7 @@ function [L, status, k, nrm] = updateL_par(L, rho, k0)
 end
 
 function [status, tk, k] = explicit_solver_par(arr, tau, k0, a_sq)
+    % inner solver for UpdateL -- partial version
     a_max = arr(1);
     if (a_max < 1e-10)
         status = 0;

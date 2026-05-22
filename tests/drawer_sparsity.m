@@ -1,3 +1,6 @@
+% run AltMin on video dataset for a few steps
+% record the sparsity changing history
+
 clear
 clc
 

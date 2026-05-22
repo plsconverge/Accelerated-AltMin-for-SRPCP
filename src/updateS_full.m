@@ -1,4 +1,6 @@
 function [r, val, status, time_sort] = updateS_full(arr, rho)
+    % full sort version for sparse subproblem
+
     time_sort = 0;
 
     if (min(arr) < 0.0)

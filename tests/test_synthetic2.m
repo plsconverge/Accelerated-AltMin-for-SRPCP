@@ -1,3 +1,5 @@
+% synthetic matrix test for AltMin
+
 clear 
 clc
 

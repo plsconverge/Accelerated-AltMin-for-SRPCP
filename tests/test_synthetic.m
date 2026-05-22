@@ -1,3 +1,6 @@
+% expansion test for robustness
+% test expansion needs of 0 to 6 expansions
+
 clear 
 clc
 

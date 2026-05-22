@@ -1,7 +1,21 @@
 function [L, S, res] = altmin(D, lambda, mu, params)
-    % set params
+    % main function for AltMin algorithm
+    % solves min ||L||_* + lambda*||S||_1 + mu*||L+S-D||_F
+    % 
+    % Inputs: 
+    % D -- observation matrix, dim m*n
+    % lambda, mu -- parameters, lambda = 1 / sqrt(m), mu = sqrt(n/2)
+    % params -- controllers
+    %
+    % Outputs:
+    % L -- recovered low-rank matrix
+    % S -- recovered sparse matrix
+    % res -- result messages
+
+    % start timer
     time_st = tic;
 
+    % set params
     [n1, n2] = size(D);
     tol = 1e-5;
     max_iter = 5e3;
@@ -17,6 +31,7 @@ function [L, S, res] = altmin(D, lambda, mu, params)
     sparse_guess = round(n1 * n2 / 2);
     buffer = 0.1;
 
+    % default mode
     Lmod = "partialsvd";
     Smod = "partialsort";
     display = true;
@@ -105,6 +120,7 @@ function [L, S, res] = altmin(D, lambda, mu, params)
 end
 
 function [obj, eta] = diagnostics(D, L, S, lambda, mu, nuc_nrm, l1nrm)
+    % diagnostics, return criterion eta and objective obj
     nrm_L = norm(L, "fro");
     nrm_S = norm(S, "fro");
 

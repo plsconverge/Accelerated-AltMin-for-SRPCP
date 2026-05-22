@@ -1,6 +1,6 @@
 function [r, val, status, time_sort] = updateS_acc(arr, rho, k0)
-% solves min \|s-a\|_2 + \rho \|s\|_1
-% assumes a >= 0, rho > 0
+    % range sort version for sparse subproblem
+
     time_sort = 0;
 
     if (min(arr) < 0.0)

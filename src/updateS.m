@@ -1,11 +1,13 @@
-function [S, status, k, l1nrm, time_sort] = updateS(S, tau, mode, k0)
+function [S, status, k, l1nrm, time_sort] = updateS(S, rho, mode, k0)
+    % control function for sparse subproblem
+
     % status = 0 -- converge
     %          1 -- invalid mode
     %          2 -- subproblem fail
     if (strcmp(mode, "fullsort"))
-        [S, status, k, l1nrm, time_sort] = updateS_ful(S, tau);
+        [S, status, k, l1nrm, time_sort] = updateS_ful(S, rho);
     elseif (strcmp(mode, "partialsort"))
-        [S, status, k, l1nrm, time_sort] = updateS_par(S, tau, k0);
+        [S, status, k, l1nrm, time_sort] = updateS_par(S, rho, k0);
     else
         fprintf("Warning: Invalid mode for updating S\n");
         status = 1;
@@ -15,12 +17,13 @@ function [S, status, k, l1nrm, time_sort] = updateS(S, tau, mode, k0)
 end
 
 
-function [S, status, k, l1nrm, time_sort] = updateS_ful(S, tau)
+function [S, status, k, l1nrm, time_sort] = updateS_ful(S, rho)
+    % outer processor
     sign_s = sign(S);
     S = abs(S);
     arr = S(:);
 
-    [k, tk, status, time_sort] = updateS_full(arr, tau);
+    [k, tk, status, time_sort] = updateS_full(arr, rho);
     if (status ~= 0)
         S = nan;
         l1nrm = nan;
@@ -32,12 +35,13 @@ function [S, status, k, l1nrm, time_sort] = updateS_ful(S, tau)
     l1nrm = norm(S(:), 1);
 end
 
-function [S, status, k, l1nrm, time_sort] = updateS_par(S, tau, k0)
+function [S, status, k, l1nrm, time_sort] = updateS_par(S, rho, k0)
+    % outer processor
     sign_s = sign(S);
     S = abs(S);
     arr = S(:);
 
-    [k, tk, status, time_sort] = updateS_acc(arr, tau, k0);
+    [k, tk, status, time_sort] = updateS_acc(arr, rho, k0);
     if (status ~= 0)
         S = nan;
         l1nrm = nan;
