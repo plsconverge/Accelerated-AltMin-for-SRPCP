@@ -4,6 +4,8 @@
 clear 
 clc
 
+rng(42)
+
 addpath(genpath("../src"))
 
 nList = [1e5, 1e6, 1e7, 1e8, 5e8];

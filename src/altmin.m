@@ -11,6 +11,10 @@ function [L, S, res] = altmin(D, lambda, mu, params)
     % L -- recovered low-rank matrix
     % S -- recovered sparse matrix
     % res -- result messages
+    %
+    % implement of this algorithm partly refers to 
+    % Deng, S., Li, X., & Zhang, Y. (2025). Alternating minimization for square root principal component pursuit. INFORMS Journal on Computing.
+
 
     % start timer
     time_st = tic;
@@ -21,10 +25,12 @@ function [L, S, res] = altmin(D, lambda, mu, params)
     max_iter = 5e3;
     max_time = 18000;
 
+    trans_flag = false;
     if (n1 < n2)
         D = D';
-        fprintf("Warning: Row < Col, Use transposition.");
+        fprintf("Warning: Row < Col, Use transposition.\n");
         [n1, n2] = size(D);
+        trans_flag = true;
     end
 
     rank_guess = round(n2 / 2);
@@ -98,6 +104,12 @@ function [L, S, res] = altmin(D, lambda, mu, params)
             res.status = 0;
             res.obj = obj;
             res.time = toc(time_st);
+
+            if trans_flag
+                L = L';
+                S = S';
+            end
+
             return;
         end
 

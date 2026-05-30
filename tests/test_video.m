@@ -6,7 +6,7 @@ clc
 
 profile on
 
-data_path = "/data/ljq/VBM4D_rawRGB";
+data_path = "../data/VBM4D_rawRGB";
 addpath(genpath("../src"))
 
 datasets = {
